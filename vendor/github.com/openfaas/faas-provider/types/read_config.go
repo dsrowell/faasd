@@ -79,6 +79,7 @@ func (ReadConfig) Read(hasEnv HasEnv) (*FaaSConfig, error) {
 		ReadTimeout:     ParseIntOrDurationValue(hasEnv.Getenv("read_timeout"), time.Second*10),
 		WriteTimeout:    ParseIntOrDurationValue(hasEnv.Getenv("write_timeout"), time.Second*10),
 		EnableBasicAuth: ParseBoolValue(hasEnv.Getenv("basic_auth"), false),
+		Nameserver:      ParseString(hasEnv.Getenv("nameserver"), "8.8.8.8"),
 		// default value from Gateway
 		SecretMountPath: ParseString(hasEnv.Getenv("secret_mount_path"), "/run/secrets/"),
 	}
