@@ -61,8 +61,13 @@ func makeProviderCmd() *cobra.Command {
 			return fmt.Errorf("cannot write hosts file: %s", writeHostsErr)
 		}
 
+		nameserver := `8.8.8.8`
+		if value, ok := os.LookupEnv(`nameserver`); ok {
+			nameserver = value
+		}
+
 		writeResolvErr := ioutil.WriteFile(path.Join(wd, "resolv.conf"),
-			[]byte(`nameserver 8.8.8.8`), workingDirectoryPermission)
+			[]byte(`nameserver `+nameserver), workingDirectoryPermission)
 
 		if writeResolvErr != nil {
 			return fmt.Errorf("cannot write resolv.conf file: %s", writeResolvErr)
